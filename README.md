@@ -1,3 +1,3 @@
 # chili-bashrc
 
-User configuration for Chililinux
+User configuration for ChiliLinux
