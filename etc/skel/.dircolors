@@ -34,7 +34,10 @@
 BLK                   38;5;68
 CAPABILITY            38;5;17
 CHR                   38;5;113;1
-DIR                   38;5;30
+DIR                   38;5;30	#default
+DIR                   1;37 	#branco
+DIR					  38;5;141 	#roxo
+DIR					  1;38;5;141
 DOOR                  38;5;127
 EXEC                  38;5;208;1
 FIFO                  38;5;126
@@ -324,11 +327,12 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .v                    38;5;81
 
 # ChiliOS
-.chi.zst.sha256       38;5;101
-.chi.zst.desc         38;5;101
-.chi.zst              38;5;101
-.chi                  38;5;101;1
-.zst                  38;5;101
+.zst                   38;5;33
+.chi.zst.sha256        38;5;33
+.chi.zst.desc          38;5;240
+#.chi.zst               38;5;87
+.chi.zst              38;5;33;1
+.fetchnew              38;5;33
 
 # MazonOS
 .mz.sha256				38;5;101
@@ -546,7 +550,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .zipx                 38;5;40
 .zoo                  38;5;40
 .zpaq                 38;5;40
-.zst                  38;5;40
+#.zst                  38;5;40
 .zstd                 38;5;40
 .zz                   38;5;40
   # packaged apps {{{2

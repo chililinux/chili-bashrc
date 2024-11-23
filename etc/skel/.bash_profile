@@ -3,7 +3,7 @@
 #
 
 if command -v hostnamectl; then
-    hostnamectl
+	hostnamectl
 fi
 timenow="$(date +'%H:%M')"
 load="$(awk '{print $1 ", " $2 ", " $3}' /proc/loadavg)"
@@ -21,4 +21,3 @@ printf '\n'
 #	exec startx &
 #	exec start lxmd &
 #fi
-

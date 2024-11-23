@@ -242,7 +242,7 @@ sh_bashrc_configure() {
 	#alias rdel='find . -name '$1' -print0 | xargs -0 rm -v'
 	alias ver="lsb_release -a"
 	alias cdg="cd /github/ChiliOS/packages/core"
-	alias cdr="cd /github/ChiliOS/repo"
+	alias cdr="cd /github/ChiliOS/packages/core/testing/x86_64/"
 	alias cdp="cd /var/cache/pacman/pkg"
 	alias cda="cd /var/cache/fetch/archives"
 	alias cda="cd $HOME/.local/share/applications/"
@@ -1038,6 +1038,7 @@ EOF
 
 #qemu-system-x86_64 -monitor stdio -smp "$(nproc)" -k pt-br -machine accel=kvm -m 4096 -cdrom "$1" -hda "/home/vcatafesta/.aqemu/Linux_2.6_HDA.img" -boot once=d,menu=off -net nic -net user -rtc base=localtime -name "runcdrom"
 chili-qemurunfile() {
+  local random_port=$(shuf -i 4444-45000 -n 1)
 	declare -a qemu_options=()
 
 	if test $# -ge 1; then
@@ -1069,6 +1070,12 @@ chili-qemurunfile() {
 		qemu_options+=(-device hda-output,audiodev=snd0)
 		#		qemu_options+=(-global ICH9-LPC.disable_s3=1)
 		qemu_options+=(-machine type=q35,smm=on,accel=kvm,usb=on,pcspk-audiodev=snd0)
+		#nc localhost 4444
+		#telnet localhost 4444
+		qemu_options+=(-monitor tcp:localhost:$random_port,server,nowait)
+		#socat -,raw,echo=0 unix:/tmp/qemu-monitor.sock
+		#qemu_options+=(-monitor unix:/tmp/qemu-monitor.sock,server,nowait)
+		#qemu_options+=(-monitor pty)
 		sudo qemu-system-x86_64 "${qemu_options[@]}"
 	else
 		cat <<EOF
@@ -1683,7 +1690,9 @@ gpush() {
 
 	log_wait_msg "${red}Iniciando git push in ${yellow}${mainbranch}'${reset}"
 	#export GIT_CURL_VERBOSE=1
+	git fetch upstream
 	git checkout "$mainbranch"
+	git merge upstream/"${mainbranch}"
 	git config --global http.postBuffer 524288000
 	git config credential.helper store
 
@@ -1701,7 +1710,8 @@ gpush() {
 			return 1
 		fi
 	fi
-	git push --force
+#	git push --force
+	git push origin "$mainbranch"
 	git log origin/$mainbranch..$mainbranch
 	return 0
 }

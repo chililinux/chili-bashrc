@@ -19,6 +19,38 @@ MAGENTA="\033[1;35m" # Magenta
 CYAN="\033[1;36m"    # Ciano
 RESET="\033[0m"      # Resetar as cores
 
+# Normal Colors
+Black='\e[0;30m'  # Black
+Red='\e[0;31m'    # Red
+Green='\e[0;32m'  # Green
+Yellow='\e[0;33m' # Yellow
+Blue='\e[0;34m'   # Blue
+Purple='\e[0;35m' # Purple
+Cyan='\e[0;36m'   # Cyan
+White='\e[0;37m'  # White
+
+# Bold
+BBlack='\e[1;30m'  # Black
+BRed='\e[1;31m'    # Red
+BGreen='\e[1;32m'  # Green
+BYellow='\e[1;33m' # Yellow
+BBlue='\e[1;34m'   # Blue
+BPurple='\e[1;35m' # Purple
+BCyan='\e[1;36m'   # Cyan
+BWhite='\e[1;37m'  # White
+
+# Background
+On_Black='\e[40m'        # Black
+On_Red='\e[41m'          # Red
+On_Green='\e[42m'        # Green
+On_Yellow='\e[43m'       # Yellow
+On_Blue='\e[44m'         # Blue
+On_Purple='\e[45m'       # Purple
+On_Cyan='\e[46m'         # Cyan
+On_White='\e[47m'        # White
+NC="\e[m"                # Color Reset
+ALERT=${BWhite}${On_Red} # Bold White on red background
+
 # Função para obter o status do último comando
 function get_exit_status() {
 	local status="$?"
@@ -29,10 +61,10 @@ function get_exit_status() {
 	fi
 }
 
-HISTCONTROL=ignoreboth	# don't put duplicate lines or lines starting with space in the history.
-shopt -s histappend		# append to the history file, don't overwrite it
-HISTSIZE=1000			# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTFILESIZE=2000		# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTCONTROL=ignoreboth # don't put duplicate lines or lines starting with space in the history.
+shopt -s histappend    # append to the history file, don't overwrite it
+HISTSIZE=1000          # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTFILESIZE=2000      # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -126,10 +158,11 @@ if ! shopt -oq posix; then
 	fi
 fi
 
-[ -f ~/.fzf.bash   ] && . ~/.fzf.bash
+[ -f /usr/share/doc/pkgfile/command-not-found.bash ] && source /usr/share/doc/pkgfile/command-not-found.bash
+[ -f ~/.fzf.bash ] && . ~/.fzf.bash
 [ -f ~/.bashrcfull ] && . ~/.bashrcfull
 [ -f ~/.bashrckali ] && . ~/.bashrckali
-[ -f /etc/bashrc   ] && . /etc/bashrc
+[ -f /etc/bashrc ] && . /etc/bashrc
 [ -f ~/.bashrckali ] && . ~/.bashrckali
 #
 #if ((EUID != 0)); then
@@ -151,7 +184,7 @@ export PS4=$'${red}${0##*/}${green}[$FUNCNAME]${pink}[$LINENO]${reset} '
 # . ~/.ps1powerline
 
 # Load pyenv automatically by appending
-# the following to 
+# the following to
 # ~/.bash_profile if it exists, otherwise ~/.profile (for login shells)
 # and ~/.bashrc (for interactive shells) :
 
@@ -160,3 +193,23 @@ export PYENV_ROOT="$HOME/.pyenv"
 eval "$(pyenv init -)"
 
 # Restart your shell for the changes to take effect.
+
+welcome() {
+	if command -v hostnamectl; then
+		hostnamectl
+		echo
+	fi
+	timenow="$(date +'%H:%M')"
+	load="$(awk '{print $1 ", " $2 ", " $3}' /proc/loadavg)"
+
+	echo -e "${BCyan}This is BASH ${BRed}${BASH_VERSION%.*}${BCyan}- DISPLAY on ${BRed}$DISPLAY${NC}\n"
+	date
+	timenow="$(date +'%H:%M')"
+	load="$(awk '{print $1 ", " $2 ", " $3}' /proc/loadavg)"
+	printf 'Welcome back! The time now is %s UTC\n' "$timenow"
+	printf 'Server load    :  %s\n' "$load"
+	printf 'Server Uptime  : %s\n' "$(uptime)"
+	printf 'User           :  %s %s\n' "$(whoami)" "$(id)"
+	printf 'Link to distro :  https://chililinux.com/void/ \n'
+}
+welcome
