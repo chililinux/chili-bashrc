@@ -76,7 +76,7 @@ sh_bashrc_configure() {
 	#alias hs="sudo ssh -X -p 65002 u356719782@185.211.7.40"
 	alias hsx="ssh -X -p 65002 u537062342@154.49.247.66"
 	alias hs="ssh -X -p 65002 u537062342@154.49.247.66"
-	alias sc="sudo sftp -P 65002 u537062342@154.49.247.66:/home/u537062342/domains/chililinux.com/public_html/packages/core/"
+	alias sc="sudo sftp -P 65002 u537062342@154.49.247.66:/home/u537062342/domains/chililinux.com/public_html/"
 	alias hpb="sudo ssh -X -p 2222 root@vcatafesta.ddns.net"
 
 	# Definir a variável de controle para restaurar a formatação original
@@ -232,6 +232,7 @@ sh_bashrc_configure() {
 	#alias xcopy="cp -Rpvn"
 	alias xcopyn="cp -Rpvan"
 	alias xcopy="cp -Rpva"
+	alias xcopyl="cp -Rpva --dereference"
 	alias xcopyu="cp --recursive -p --verbose --archive --update"
 	#alias cp="rsync -ahu --info=progress2"
 	#alias cpr="rsync -ahur --info=progress2"
